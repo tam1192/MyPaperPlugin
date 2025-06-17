@@ -1,0 +1,7 @@
+name: MyPaperPlugin
+version: 0.0.1
+main: io.papermc.mypaperplugin.MyPaperPlugin
+description: An example plugin
+author: nikki
+website: https://adw39.org
+api-version: '1.21.5'
