@@ -12,6 +12,8 @@ plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
 
+    // Apply the plugin
+    id("xyz.jpenilla.run-paper") version "2.2.0"
 }
 
 repositories {
@@ -22,6 +24,8 @@ repositories {
         name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+
+
 }
 
 dependencies {
@@ -40,6 +44,8 @@ dependencies {
     implementation(libs.guava)
 
     compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
+
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -49,7 +55,16 @@ java {
     }
 }
 
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+tasks{
+    named<Test>("test") {
+        // Use JUnit Platform for unit tests.
+        useJUnitPlatform()
+    }
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.20.1")
+    }
 }
+
