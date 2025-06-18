@@ -5,3 +5,8 @@ description: An example plugin
 author: nikki
 website: https://adw39.org
 api-version: '1.21.0'
+commands:
+  test:
+    description: サーバーテスト用のコマンド
+    usage: "/test <arg>"
+    permission: org.adw39.mypaperplugin.test

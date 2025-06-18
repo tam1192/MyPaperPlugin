@@ -3,7 +3,7 @@ package org.adw39.mypaperplugin
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
-import java.awt.TextComponent
+import org.bukkit.event.player.PlayerQuitEvent
 
 
 class PlayerListener: Listener{
