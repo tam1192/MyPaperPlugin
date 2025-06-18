@@ -16,6 +16,8 @@ plugins {
 
     // Apply the plugin
     id("xyz.jpenilla.run-paper") version "2.3.1"
+
+    id("com.gradleup.shadow") version "8.3.6"
 }
 
 repositories {
@@ -47,7 +49,7 @@ dependencies {
 
     compileOnly("io.papermc.paper:paper-api:1.21.5-R0.1-SNAPSHOT")
 
-
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
