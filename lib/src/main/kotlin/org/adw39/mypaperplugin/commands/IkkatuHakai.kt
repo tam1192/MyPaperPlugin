@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.Material
 import org.bukkit.Bukkit
+import java.util.logging.Logger
 
 class IkkatuHakai: TabExecutor {
 
@@ -16,7 +17,8 @@ class IkkatuHakai: TabExecutor {
         p3: Array<out String>
     ): MutableList<String>? {
         val args = p3.iterator()
-        val arg1 = kotlin.runCatching { args.next() }.getOrElse {
+        val arg1 = args.next()
+        if (arg1.isBlank()) {
             val result: MutableList<String> = mutableListOf()
             result.add("add")
             result.add("del")
@@ -33,8 +35,9 @@ class IkkatuHakai: TabExecutor {
 
     override fun onCommand(sender: CommandSender, p1: Command, p2: String, p3: Array<out String>): Boolean {
         val args = p3.iterator()
-        val arg1 = kotlin.runCatching { args.next() }.getOrElse { return false }
-        val targetBlock = MyPaperPlugin().config.getList("targetBlock")?.filterIsInstance<Material>() ?: mutableListOf<Material>()
+        val arg1 = args.next()
+        if (arg1.isBlank()) {return false}
+        val targetBlock = MyPaperPlugin.instance.config.getList("targetBlock")?.filterIsInstance<Material>() ?: mutableListOf<Material>()
         return when(arg1) {
             "add" -> {
                 val val1 = kotlin.runCatching { args.next() }.getOrElse { return false }
@@ -43,7 +46,7 @@ class IkkatuHakai: TabExecutor {
                     return true
                 }
                 if (targetBlock.find { it == material } == null) {
-                    MyPaperPlugin().config.set("targetBlock", (targetBlock + material))
+                    MyPaperPlugin.instance.config.set("targetBlock", (targetBlock + material))
                     true
                 } else {
                     sender.sendMessage("このブロックidはすでに登録されています")
@@ -57,7 +60,7 @@ class IkkatuHakai: TabExecutor {
                     return true
                 }
                 targetBlock.filter { it != material }.also {
-                    MyPaperPlugin().config.set("targetBlock", it)
+                    MyPaperPlugin.instance.config.set("targetBlock", it)
                 }
                 true
             }

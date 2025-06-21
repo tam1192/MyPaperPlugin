@@ -8,8 +8,14 @@ import org.bukkit.Material
 import org.bukkit.plugin.java.JavaPlugin
 
 class MyPaperPlugin: JavaPlugin() {
+    companion object {
+        lateinit var instance: MyPaperPlugin
+            private set
+    }
+
     private val config = getConfig()
     override fun onEnable() {
+        instance = this
         config.addDefault("targetBlock", mutableListOf<Material>())
         config.options().copyDefaults(true)
         saveConfig()
