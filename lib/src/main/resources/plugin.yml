@@ -18,3 +18,7 @@ commands:
     description: 視点先のブロックを破壊します
     usage: "/eyesmash <distance>"
     permission: org.adw39.mypaperplugin.eyesmash
+  ikkatuhakai:
+    description: 視点先のブロックを破壊します
+    usage: "/ikkatuhakai (add <block id> | del <block id> | list)"
+    permission: org.adw39.mypaperplugin.ikkatuhakai
