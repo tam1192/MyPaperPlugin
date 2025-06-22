@@ -16,7 +16,7 @@ class MyPaperPlugin: JavaPlugin() {
     private val config = getConfig()
     override fun onEnable() {
         instance = this
-        config.addDefault("targetBlock", mutableListOf<Material>())
+        config.addDefault("targetBlock", mutableListOf<String>())
         config.options().copyDefaults(true)
         saveConfig()
 
