@@ -5,7 +5,8 @@ import org.bukkit.block.Block
 
 object IkkatuHakai {
     fun ikkatuHakai(block: Block) {
-        if (block.type === Material.OAK_LOG) {
+        val targetBlock = MyPaperPlugin.instance.config.getList("targetBlock")?.filterIsInstance<Material>() ?: mutableListOf<Material>()
+        if (block.type in targetBlock) {
             block.breakNaturally()
             for (i in 0..<26) {
                 val x = (i % 3)-1
