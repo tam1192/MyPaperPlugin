@@ -27,7 +27,7 @@ class IkkatuHakai: TabExecutor {
         }
         return when(arg1) {
             "add", "del" -> {
-                Material.entries.map { it.name }.toMutableList()
+                Material.entries.filter { it.isBlock }.map { it.name.lowercase() }.toMutableList()
             }
             else -> null
         }
@@ -40,13 +40,18 @@ class IkkatuHakai: TabExecutor {
         val targetBlock = MyPaperPlugin.instance.config.getList("targetBlock")?.filterIsInstance<Material>() ?: mutableListOf<Material>()
         return when(arg1) {
             "add" -> {
-                val val1 = kotlin.runCatching { args.next() }.getOrElse { return false }
+                val val1 = kotlin.runCatching { args.next() }.getOrElse { return false }.uppercase()
                 val material = Material.getMaterial(val1) ?: run {
                     sender.sendMessage("ブロックidが存在しません")
                     return true
                 }
+                if (!material.isBlock) {
+                    sender.sendMessage("ブロックidではありません。")
+                    return true
+                }
                 if (targetBlock.find { it == material } == null) {
                     MyPaperPlugin.instance.config.set("targetBlock", (targetBlock + material))
+                    MyPaperPlugin.instance.saveConfig()
                     true
                 } else {
                     sender.sendMessage("このブロックidはすでに登録されています")
@@ -61,16 +66,23 @@ class IkkatuHakai: TabExecutor {
                 }
                 targetBlock.filter { it != material }.also {
                     MyPaperPlugin.instance.config.set("targetBlock", it)
+                    sender.sendMessage("${val1.lowercase()}を削除しました。")
                 }
                 true
             }
             "list" -> {
-                var sendMessage = "登録済みのブロック\n"
-                targetBlock.forEach {
-                    sendMessage += "- ${it.name}\n"
+                if (targetBlock.isEmpty()) {
+                    sender.sendMessage("ブロックが登録されていません。")
+                    true
+                } else {
+                    var sendMessage = "登録済みのブロック\n"
+                    targetBlock.forEach {
+                        sendMessage += "- ${it.name}\n"
+                    }
+                    sender.sendMessage(sendMessage)
+                    true
                 }
-                sender.sendMessage(sendMessage)
-                true
+
             }
             else -> false
         }
