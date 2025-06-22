@@ -1,5 +1,6 @@
 package org.adw39.mypaperplugin
 
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
 
@@ -19,5 +20,11 @@ object IkkatuHakai {
                 }
             }
         }
+    }
+
+    fun radius(center: Location, target: Location, type: Material) {
+
+
+
     }
 }
