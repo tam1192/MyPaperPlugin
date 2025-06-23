@@ -15,8 +15,8 @@ class PlayerListener: Listener{
         event.player.sendMessage("Welcome to the server!")
     }
 
-    @EventHandler
-    fun onBlockBreak(event: BlockBreakEvent) {
-        IkkatuHakai.ikkatuHakai(event.block)
-    }
+//    @EventHandler
+//    fun onBlockBreak(event: BlockBreakEvent) {
+//        IkkatuHakai.ikkatuHakai(event.block)
+//    }
 }
