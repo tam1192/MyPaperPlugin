@@ -14,7 +14,10 @@ import org.bukkit.util.Vector
 //}
 
 fun blockForwardSearch(centerBlock: Block, targetVec: Vector) {
-
+    val world = centerBlock.world
+    val centerVec = centerBlock.location.toVector()
+    val direction = targetVec.subtract(centerVec)
+    targetVec.add(direction).toLocation(world).block.type = Material.GLASS
 }
 
 fun blockAroundSearch(centerBlock: Block) {

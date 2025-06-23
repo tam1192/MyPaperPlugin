@@ -2,6 +2,7 @@ package org.adw39.mypaperplugin.commands
 
 import org.adw39.mypaperplugin.MyPaperPlugin
 import org.adw39.mypaperplugin.utils.blockAroundSearch
+import org.adw39.mypaperplugin.utils.blockForwardSearch
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -27,6 +28,12 @@ class ExVector: TabExecutor {
                 blockAroundSearch(target)
                 true
             }
+            args.size == 1 && fixArgs[0] == "test2" && sender is Player -> {
+                val target = sender.getTargetBlock(null, 10)
+                val center = sender.location.toVector()
+                blockForwardSearch(target, center)
+                true
+            }
             args.size == 2 && fixArgs[0] == "distance_target_block" && fixArgs[1] == "normal" && sender is Player  -> {
                 val player = sender.location.toVector()
                 val targetBlock = sender.getTargetBlock(null, 100).location.toVector()
@@ -50,7 +57,7 @@ class ExVector: TabExecutor {
         return when {
             args.size == 2 && args[0] == "location_vs_vector" -> ""
             args.size == 2 && args[0] == "distance_target_block" -> "normal,block"
-            args.size == 1 && args[0] == "" -> "location_vs_vector,distance_target_block,test1"
+            args.size == 1 && args[0] == "" -> "location_vs_vector,distance_target_block,test1,test2"
             else -> ""
         }.split(",").toMutableList()
     }
