@@ -1,5 +1,6 @@
 package org.adw39.mypaperplugin
 
+import org.adw39.mypaperplugin.commands.ExVector
 import org.adw39.mypaperplugin.commands.EyeExplosion
 import org.adw39.mypaperplugin.commands.EyeSmash
 import org.adw39.mypaperplugin.commands.IkkatuHakai
@@ -24,25 +25,11 @@ class MyPaperPlugin: JavaPlugin() {
         logger.info("MyPaperPlugin enabled")
 
         getCommand("test")?.setExecutor(CommandListener())
-            ?: run {
-                logger.severe("No CommandListener was set!")
-                Bukkit.shutdown()
-            }
         getCommand("eyesmash")?.setExecutor(EyeSmash())
-            ?: run {
-                logger.severe("No CommandListener was set!")
-                Bukkit.shutdown()
-            }
         getCommand("eyeexplosion")?.setExecutor(EyeExplosion())
-            ?: run {
-                logger.severe("No CommandListener was set!")
-                Bukkit.shutdown()
-            }
         getCommand("ikkatuhakai")?.setExecutor(IkkatuHakai())
-            ?: run {
-                logger.severe("No CommandListener was set!")
-                Bukkit.shutdown()
-            }
+        getCommand("exvector")?.setExecutor(ExVector())
+
     }
     override fun onDisable() {
         saveConfig()
