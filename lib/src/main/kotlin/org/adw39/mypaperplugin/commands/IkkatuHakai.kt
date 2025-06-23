@@ -13,29 +13,15 @@ import java.util.logging.Logger
 class IkkatuHakai: TabExecutor {
 
     override fun onTabComplete(
-        p0: CommandSender,
-        p1: Command,
-        p2: String,
-        p3: Array<out String>
+        sender: CommandSender,
+        command: Command,
+        label: String,
+        args: Array<out String>
     ): MutableList<String>? {
-        val args = p3.iterator()
-        val arg1 = args.next()
-        if (arg1.isBlank()) {
-            val result: MutableList<String> = mutableListOf()
-            result.add("add")
-            result.add("del")
-            result.add("list")
-            return result
-        }
-        return when(arg1) {
-            // 極力lowercaseで登録させる
-            "add" -> {
-                Material.entries.filter { it.isBlock }.map { it.name.lowercase() }.toMutableList()
-            }
-            // リストの中から選ばせる
-            "del" -> {
-                MyPaperPlugin.instance.config.getStringList("targetBlock")
-            }
+        return when {
+            args[0] == "add" -> Material.entries.filter { it.isBlock }.map { it.name.lowercase() }.toMutableList()
+            args[0] == "del" -> MyPaperPlugin.instance.config.getStringList("targetBlock").toMutableList()
+            args.isEmpty() -> "add,del,list".split(",").toMutableList()
             else -> null
         }
     }
