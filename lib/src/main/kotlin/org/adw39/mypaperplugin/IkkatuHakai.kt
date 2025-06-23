@@ -3,6 +3,8 @@ package org.adw39.mypaperplugin
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Block
+import org.bukkit.util.BlockVector
+import kotlin.math.max
 
 object IkkatuHakai {
     fun ikkatuHakai(block: Block) {
@@ -10,19 +12,14 @@ object IkkatuHakai {
         // targetBlockの中に存在すれば
         if (block.type.name.lowercase() in targetBlock) {
             block.breakNaturally()
-            for (i in 0..<26) {
-                val x = (i % 3)-1
-                val y = (i / 3 % 3)-1
-                val z = (i / 9)-1
-                val location = block.location.add(x.toDouble(), y.toDouble(), z.toDouble())
-                if (location.block.type == block.type) {
-                    ikkatuHakai(location.block)
-                }
             }
         }
     }
 
     fun radius(center: Location, target: Location, type: Material) {
+        // 中心座標からどれくらい離れてるかを確認する。
+        val distance = center.toVector().subtract(target.toVector()).toBlockVector()
+
 
 
 
