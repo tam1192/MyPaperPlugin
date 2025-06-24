@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Player
+import org.bukkit.util.BlockVector
 
 class ExVector: TabExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
@@ -29,9 +30,16 @@ class ExVector: TabExecutor {
                 true
             }
             args.size == 1 && fixArgs[0] == "test2" && sender is Player -> {
-                val target = sender.getTargetBlock(null, 10)
-                val center = sender.location.toVector()
-                blockForwardSearch(target, center)
+                val target = run {
+                    val block = sender.getTargetBlock(null, 10)
+                    BlockVector(block.x, block.y, block.z)
+                }
+                val center= run {
+                    val block = sender.location
+                    BlockVector(block.blockX, block.blockY, block.blockZ)
+                }
+                val direction = blockForwardSearch(center, target)
+                sender.sendMessage("${direction.x}, ${direction.y}, ${direction.z}")
                 true
             }
             args.size == 2 && fixArgs[0] == "distance_target_block" && fixArgs[1] == "normal" && sender is Player  -> {

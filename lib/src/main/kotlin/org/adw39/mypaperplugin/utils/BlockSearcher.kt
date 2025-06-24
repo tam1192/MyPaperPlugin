@@ -1,6 +1,7 @@
 package org.adw39.mypaperplugin.utils
 
 import org.bukkit.Material
+import org.bukkit.World
 import org.bukkit.block.Block
 import org.bukkit.block.data.BlockData
 import org.bukkit.entity.Player
@@ -13,11 +14,9 @@ import org.bukkit.util.Vector
 //
 //}
 
-fun blockForwardSearch(centerBlock: Block, targetVec: Vector) {
-    val world = centerBlock.world
-    val centerVec = centerBlock.location.toVector()
-    val direction = targetVec.subtract(centerVec)
-    targetVec.add(direction).toLocation(world).block.type = Material.GLASS
+fun blockForwardSearch(centerVec: Vector, targetVec: Vector): Vector {
+    val direction = centerVec.subtract(targetVec)
+    return direction.normalize()
 }
 
 fun blockAroundSearch(centerBlock: Block) {
