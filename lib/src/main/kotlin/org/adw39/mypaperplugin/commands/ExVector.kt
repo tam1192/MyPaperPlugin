@@ -3,6 +3,7 @@ package org.adw39.mypaperplugin.commands
 import org.adw39.mypaperplugin.MyPaperPlugin
 import org.adw39.mypaperplugin.utils.blockAroundSearch
 import org.adw39.mypaperplugin.utils.blockForwardSearch
+import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -30,6 +31,7 @@ class ExVector: TabExecutor {
                 true
             }
             args.size == 1 && fixArgs[0] == "test2" && sender is Player -> {
+                val world = sender.world
                 val target = run {
                     val block = sender.getTargetBlock(null, 10)
                     BlockVector(block.x, block.y, block.z)
@@ -38,8 +40,12 @@ class ExVector: TabExecutor {
                     val block = sender.location
                     BlockVector(block.blockX, block.blockY+1, block.blockZ)
                 }
-                val direction = blockForwardSearch(center, target)
-                sender.sendMessage("${direction.x}, ${direction.y}, ${direction.z}")
+                // targetより外側1ブロックの向きのリストを取得する
+                blockForwardSearch(center, target).forEach {
+                    // targetから向きを足す
+                    val a = target.clone().add(it)
+                    a.toLocation(world).block.type = Material.GLASS
+                }
                 true
             }
             args.size == 2 && fixArgs[0] == "distance_target_block" && fixArgs[1] == "normal" && sender is Player  -> {
