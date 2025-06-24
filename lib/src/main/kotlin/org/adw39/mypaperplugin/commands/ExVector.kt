@@ -23,30 +23,30 @@ class ExVector: TabExecutor {
                 sender.sendMessage("normal block")
                 true
             }
-            args.size == 1 && fixArgs[0] == "test1" && sender is Player -> {
-                val target = sender.getTargetBlock(null, 10)
-                blockAroundSearch(target.location.toVector().toBlockVector()).forEach {
-                    it.toLocation(sender.world).block.
-                }
-                true
-            }
-            args.size == 1 && fixArgs[0] == "test2" && sender is Player -> {
-                val world = sender.world
-                val target = run {
-                    val block = sender.getTargetBlock(null, 10)
-//                    BlockVector(block.x, block.y, block.z)
-                    block
-                }
-                val center= run {
-                    val block = sender.location
-                    BlockVector(block.blockX, block.blockY+1, block.blockZ)
-                }
-                // targetより外側1ブロックの向きのリストを取得する
-                blockChainSearch(center, target).forEach {
-                    it.toLocation(world).block.type = Material.GLASS
-                }
-                true
-            }
+//            args.size == 1 && fixArgs[0] == "test1" && sender is Player -> {
+//                val target = sender.getTargetBlock(null, 10)
+//                blockAroundSearch(target.location.toVector().toBlockVector()).forEach {
+//                    it.toLocation(sender.world).block.
+//                }
+//                true
+//            }
+//            args.size == 1 && fixArgs[0] == "test2" && sender is Player -> {
+//                val world = sender.world
+//                val target = run {
+//                    val block = sender.getTargetBlock(null, 10)
+////                    BlockVector(block.x, block.y, block.z)
+//                    block
+//                }
+//                val center= run {
+//                    val block = sender.location
+//                    BlockVector(block.blockX, block.blockY+1, block.blockZ)
+//                }
+//                // targetより外側1ブロックの向きのリストを取得する
+//                blockChainSearch(center, target).forEach {
+//                    it.toLocation(world).block.type = Material.GLASS
+//                }
+//                true
+//            }
             args.size == 2 && fixArgs[0] == "distance_target_block" && fixArgs[1] == "normal" && sender is Player  -> {
                 val player = sender.location.toVector()
                 val targetBlock = sender.getTargetBlock(null, 100).location.toVector()
