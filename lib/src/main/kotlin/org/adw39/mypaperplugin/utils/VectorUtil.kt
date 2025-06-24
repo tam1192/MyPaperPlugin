@@ -34,26 +34,26 @@ fun blockForwardSearchTarget(previousVec: BlockVector, currentVec: BlockVector):
     }
 
     // currentの1つ外側に対してブロックを設置する。
-    val res = mutableListOf<BlockVector>()
+    val res = mutableSetOf<BlockVector>()
 
     // 次に探索&進むべき方向を表す
     for (a in -1..1) {
         for (b in -1..1) {
             // x軸方向に進んでる
-            if (direction.first != 0) {
+            if (direction.first != 0) { //1
                 res.add(BlockVector(direction.first + currentVec.blockX, a + currentVec.blockY, b + currentVec.blockZ))
             }
             // y軸方向に進んでる
-            if (direction.second != 0) {
+            if (direction.second != 0) { // 1
                 res.add(BlockVector(a + currentVec.blockX, direction.second + currentVec.blockY, b + currentVec.blockZ))
             }
             // z軸方向に進んでる
-            if (direction.third != 0) {
+            if (direction.third != 0) { // 1
                 res.add(BlockVector(a + currentVec.blockX, b + currentVec.blockY, direction.third + currentVec.blockZ))
             }
         }
     }
-    return res
+    return res.toList()
 }
 
 fun blockAroundSearch(centerBlock: Block) {
