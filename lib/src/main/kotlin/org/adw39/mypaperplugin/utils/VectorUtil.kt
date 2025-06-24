@@ -30,32 +30,26 @@ fun blockForwardSearchTarget(previousVec: BlockVector, currentVec: BlockVector):
     val direction = run {
         // 現在と手前の差分で、進んでる方向を26方向で表す
         val dif = currentVec.clone().subtract(previousVec)
-        Triple(sign(dif.x).toInt()+1, sign(dif.y).toInt()+1, sign(dif.z).toInt()+1)
+        Triple(sign(dif.x).toInt(), sign(dif.y).toInt(), sign(dif.z).toInt())
     }
 
-    // 探索が必要な部分をtrueにする
-    val res = MutableList(3) {
-        MutableList(3) {
-            MutableList(3) {
-                false
-            }
-        }
-    }
+    // currentの1つ外側に対してブロックを設置する。
+    val res = mutableListOf<BlockVector>()
 
     // 次に探索&進むべき方向を表す
-    for (a in 0..2) {
-        for (b in 0..2) {
+    for (a in -1..1) {
+        for (b in -1..1) {
             // x軸方向に進んでる
             if (direction.first != 0) {
-                res[direction.first][a][b] = true
+                res.add(BlockVector(direction.first + currentVec.blockX, a + currentVec.blockY, b + currentVec.blockZ))
             }
             // y軸方向に進んでる
             if (direction.second != 0) {
-                res[a][direction.second][b] = true
+                res.add(BlockVector(a + currentVec.blockX, direction.second + currentVec.blockY, b + currentVec.blockZ))
             }
             // z軸方向に進んでる
             if (direction.third != 0) {
-                res[a][b][direction.third] = true
+                res.add(BlockVector(a + currentVec.blockX, b + currentVec.blockY, direction.third + currentVec.blockZ))
             }
         }
     }
