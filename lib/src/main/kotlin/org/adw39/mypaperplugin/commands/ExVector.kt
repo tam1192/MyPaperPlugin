@@ -1,11 +1,10 @@
 package org.adw39.mypaperplugin.commands
 
-import org.adw39.mypaperplugin.MyPaperPlugin
 import org.adw39.mypaperplugin.utils.blockAroundSearch
 import org.adw39.mypaperplugin.utils.blockForwardSearch
+import org.adw39.mypaperplugin.utils.blockForwardSearchTarget
 import org.bukkit.Material
 import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import org.bukkit.entity.Player
@@ -34,7 +33,8 @@ class ExVector: TabExecutor {
                 val world = sender.world
                 val target = run {
                     val block = sender.getTargetBlock(null, 10)
-                    BlockVector(block.x, block.y, block.z)
+//                    BlockVector(block.x, block.y, block.z)
+                    block
                 }
                 val center= run {
                     val block = sender.location
