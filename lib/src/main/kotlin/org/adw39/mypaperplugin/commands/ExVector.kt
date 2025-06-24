@@ -42,9 +42,7 @@ class ExVector: TabExecutor {
                 }
                 // targetより外側1ブロックの向きのリストを取得する
                 blockForwardSearch(center, target).forEach {
-                    // targetから向きを足す
-                    val a = target.clone().add(it)
-                    a.toLocation(world).block.type = Material.GLASS
+                    it.toLocation(world).block.type = Material.GLASS
                 }
                 true
             }

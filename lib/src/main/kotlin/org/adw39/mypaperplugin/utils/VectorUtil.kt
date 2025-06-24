@@ -1,10 +1,7 @@
 package org.adw39.mypaperplugin.utils
 
 import org.bukkit.Material
-import org.bukkit.World
 import org.bukkit.block.Block
-import org.bukkit.block.data.BlockData
-import org.bukkit.entity.Player
 import org.bukkit.util.BlockVector
 import org.bukkit.util.Vector
 import kotlin.math.sign
@@ -16,25 +13,32 @@ import kotlin.math.sign
 //
 //}
 
-fun blockForwardSearch(centerVec: BlockVector, targetVec: BlockVector): List<BlockVector> {
-    // どっちの方向向いてるか確定させる
+// previous(手前)とcurrent(対象ブロック、現在)から、探索が必要なブロックを取得する
+fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<BlockVector> {
+    // どの方向に進んでるかを取得する
     val direction = run {
-        val dif = centerVec.subtract(targetVec)
+        // 現在と手前の差分で、進んでる方向を26方向で表す
+        val dif = currentVec.clone().subtract(previousVec)
         Triple(sign(dif.x).toInt(), sign(dif.y).toInt(), sign(dif.z).toInt())
     }
+
+    // currentの1つ外側に対してブロックを設置する。
     val res = mutableListOf<BlockVector>()
 
-    // targetの1つ外側に対してブロックを設置する。
+    // 次に探索&進むべき方向を表す
     for (a in -1..1) {
         for (b in -1..1) {
+            // x軸方向に進んでる
             if (direction.first != 0) {
-                res.add(BlockVector(direction.first, a, b))
+                res.add(BlockVector(direction.first + currentVec.blockX, a + currentVec.blockY, b + currentVec.blockZ))
             }
+            // y軸方向に進んでる
             if (direction.second != 0) {
-                res.add(BlockVector(a, direction.second, b))
+                res.add(BlockVector(a + currentVec.blockX, direction.second + currentVec.blockY, b + currentVec.blockZ))
             }
+            // z軸方向に進んでる
             if (direction.third != 0) {
-                res.add(BlockVector(a, b, direction.third))
+                res.add(BlockVector(a + currentVec.blockX, b + currentVec.blockY, direction.third + currentVec.blockZ))
             }
         }
     }
