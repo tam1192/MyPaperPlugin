@@ -1,25 +1,28 @@
 package org.adw39.mypaperplugin.utils
 
+import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.util.BlockVector
 import kotlin.math.sign
 
-//fun blockChainSearch(centerBlock: Block) {
-//    val world = centerBlock.world
-//    val
-//
-//
-//}
 
-// previous(手前)とcurrent(対象ブロック、現在)から、自分と同じブロックを取得する
-fun blockChainSearch(previousVec: BlockVector, current: Block): List<BlockVector> {
-//    val targetBlockType = current.type
-//    val world = current.world
-//    val currentVec = BlockVector(current.x, current.y, current.z)
-//    return blockForwardSearch(previousVec, currentVec).filter {
-//        val locBlock = it.toLocation(world).block
-//        locBlock.type === targetBlockType
-//    }
+
+// 自分と同じブロックが連鎖的に繋がっているのを検知する
+fun blockChainSearch(block: Block): List<BlockVector> {
+    val type = block.type
+    val world = block.world
+    // 中心を取得
+    val centerVec = BlockVector(block.x, block.y, block.z)
+    // 中心の周りを検知する
+    val res = mutableListOf<BlockVector>()
+    blockAroundSearch(centerVec).filter {
+        it.toLocation(world).block.type == type
+    }.forEach {
+        res += blockForwardSearch(centerVec, it).filter { filterIt ->
+            filterIt.toLocation(world).block.type == type
+        }
+    }
+    return res
 }
 
 // previous(手前)とcurrent(対象ブロック、現在)から、探索が必要なブロックを取得する
