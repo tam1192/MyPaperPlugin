@@ -57,16 +57,17 @@ fun blockForwardSearchTarget(previousVec: BlockVector, currentVec: BlockVector):
     return res.toList()
 }
 
-fun blockAroundSearch(centerBlock: Block) {
-    val world = centerBlock.world
-    val centerVec = centerBlock.location.toVector()
+// 自分の周りのブロックを取得する
+fun blockAroundSearch(currentVec: BlockVector): List<BlockVector> {
+    val res = mutableListOf<BlockVector>()
     for (x in -1..1) {
         for (y in -1..1) {
             for (z in -1..1) {
                 if (x != 0 || y != 0 || z != 0) {
-                    Vector(x, y, z).add(centerVec).toLocation(world).block.type = Material.GLASS
+                    res.add(BlockVector(x + currentVec.blockX, y + currentVec.blockY, z + currentVec.blockZ))
                 }
             }
         }
     }
+    return res
 }
