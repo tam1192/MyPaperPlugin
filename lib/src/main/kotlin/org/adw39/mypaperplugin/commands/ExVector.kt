@@ -23,13 +23,13 @@ class ExVector: TabExecutor {
                 sender.sendMessage("normal block")
                 true
             }
-//            args.size == 1 && fixArgs[0] == "test1" && sender is Player -> {
-//                val target = sender.getTargetBlock(null, 10)
-//                blockAroundSearch(target.location.toVector().toBlockVector()).forEach {
-//                    it.toLocation(sender.world).block.
-//                }
-//                true
-//            }
+            args.size == 1 && fixArgs[0] == "test1" && sender is Player -> {
+                val targetBlock = sender.getTargetBlock(null, 10)
+                blockChainSearch(targetBlock).forEach { block ->
+                    block.toLocation(sender.world).block.type = Material.GLASS
+                }
+                true
+            }
 //            args.size == 1 && fixArgs[0] == "test2" && sender is Player -> {
 //                val world = sender.world
 //                val target = run {

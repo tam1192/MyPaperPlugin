@@ -14,15 +14,15 @@ fun blockChainSearch(block: Block): List<BlockVector> {
     // 中心を取得
     val centerVec = BlockVector(block.x, block.y, block.z)
     // 中心の周りを検知する
-    val res = mutableListOf<BlockVector>()
-    blockAroundSearch(centerVec).filter {
+    return blockAroundSearch(centerVec).filter {
         it.toLocation(world).block.type == type
-    }.forEach {
-        res += blockForwardSearch(centerVec, it).filter { filterIt ->
-            filterIt.toLocation(world).block.type == type
+    }.fold(mutableListOf<BlockVector>()) { acc, blockVector ->
+        val x = blockForwardSearch(centerVec, blockVector).filter {
+            it.toLocation(world).block.type == type
         }
+        val y = acc + x
+        y.toMutableList()
     }
-    return res
 }
 
 // previous(手前)とcurrent(対象ブロック、現在)から、探索が必要なブロックを取得する
