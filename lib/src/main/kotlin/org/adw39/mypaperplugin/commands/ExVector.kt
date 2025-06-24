@@ -36,7 +36,7 @@ class ExVector: TabExecutor {
                 }
                 val center= run {
                     val block = sender.location
-                    BlockVector(block.blockX, block.blockY, block.blockZ)
+                    BlockVector(block.blockX, block.blockY+1, block.blockZ)
                 }
                 val direction = blockForwardSearch(center, target)
                 sender.sendMessage("${direction.x}, ${direction.y}, ${direction.z}")
