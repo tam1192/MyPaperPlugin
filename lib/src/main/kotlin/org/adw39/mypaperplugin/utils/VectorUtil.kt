@@ -20,9 +20,10 @@ fun blockChainSearch(block: Block): List<BlockVector> {
         val x = blockForwardSearch(centerVec, blockVector).filter {
             it.toLocation(world).block.type == type
         }
-        val y = acc + x
+        // 累積 + 前進検査 + 周り
+        val y = acc + x + blockVector
         y.toMutableList()
-    }
+    } + centerVec // そして、自分
 }
 
 // previous(手前)とcurrent(対象ブロック、現在)から、探索が必要なブロックを取得する
@@ -35,7 +36,7 @@ fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<
     }
 
     // currentの1つ外側に対してブロックを設置する。
-    val res = mutableSetOf<BlockVector>()
+    val res = mutableListOf<BlockVector>()
 
     // 次に探索&進むべき方向を表す
     for (a in -1..1) {
@@ -54,7 +55,7 @@ fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<
             }
         }
     }
-    return res.toList()
+    return res
 }
 
 // 自分の周りのブロックを取得する
