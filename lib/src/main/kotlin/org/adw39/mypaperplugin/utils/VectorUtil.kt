@@ -8,7 +8,7 @@ import kotlin.math.sign
 
 
 // 自分と同じブロックが連鎖的に繋がっているのを検知する
-fun blockChainSearch(block: Block): List<BlockVector> {
+fun blockChainSearch(block: Block): Set<BlockVector> {
     val type = block.type
     val world = block.world
     // 中心を取得
@@ -16,18 +16,18 @@ fun blockChainSearch(block: Block): List<BlockVector> {
     // 中心の周りを検知する
     return blockAroundSearch(centerVec).filter {
         it.toLocation(world).block.type == type
-    }.fold(mutableListOf<BlockVector>()) { acc, blockVector ->
+    }.fold(mutableSetOf<BlockVector>()) { acc, blockVector ->
         val x = blockForwardSearch(centerVec, blockVector).filter {
             it.toLocation(world).block.type == type
         }
         // 累積 + 前進検査 + 周り
         val y = acc + x + blockVector
-        y.toMutableList()
+        y.toMutableSet()
     } + centerVec // そして、自分
 }
 
 // previous(手前)とcurrent(対象ブロック、現在)から、探索が必要なブロックを取得する
-fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<BlockVector> {
+fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): Set<BlockVector> {
     // どの方向に進んでるかを取得する
     val direction = run {
         // 現在と手前の差分で、進んでる方向を26方向で表す
@@ -36,7 +36,7 @@ fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<
     }
 
     // currentの1つ外側に対してブロックを設置する。
-    val res = mutableListOf<BlockVector>()
+    val res = mutableSetOf<BlockVector>()
 
     // 次に探索&進むべき方向を表す
     for (a in -1..1) {
@@ -59,8 +59,8 @@ fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<
 }
 
 // 自分の周りのブロックを取得する
-fun blockAroundSearch(currentVec: BlockVector): List<BlockVector> {
-    val res = mutableListOf<BlockVector>()
+fun blockAroundSearch(currentVec: BlockVector): Set<BlockVector> {
+    val res = mutableSetOf<BlockVector>()
     for (x in -1..1) {
         for (y in -1..1) {
             for (z in -1..1) {
