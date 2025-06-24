@@ -1,10 +1,7 @@
 package org.adw39.mypaperplugin.utils
 
-import org.adw39.mypaperplugin.MyPaperPlugin
-import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.util.BlockVector
-import org.bukkit.util.Vector
 import kotlin.math.sign
 
 //fun blockChainSearch(centerBlock: Block) {
@@ -15,18 +12,18 @@ import kotlin.math.sign
 //}
 
 // previous(手前)とcurrent(対象ブロック、現在)から、自分と同じブロックを取得する
-fun blockForwardSearch(previousVec: BlockVector, current: Block): List<BlockVector> {
-    val targetBlockType = current.type
-    val world = current.world
-    val currentVec = BlockVector(current.x, current.y, current.z)
-    return blockForwardSearchTarget(previousVec, currentVec).filter {
-        val locBlock = it.toLocation(world).block
-        locBlock.type === targetBlockType
-    }
+fun blockChainSearch(previousVec: BlockVector, current: Block): List<BlockVector> {
+//    val targetBlockType = current.type
+//    val world = current.world
+//    val currentVec = BlockVector(current.x, current.y, current.z)
+//    return blockForwardSearch(previousVec, currentVec).filter {
+//        val locBlock = it.toLocation(world).block
+//        locBlock.type === targetBlockType
+//    }
 }
 
 // previous(手前)とcurrent(対象ブロック、現在)から、探索が必要なブロックを取得する
-fun blockForwardSearchTarget(previousVec: BlockVector, currentVec: BlockVector): List<BlockVector> {
+fun blockForwardSearch(previousVec: BlockVector, currentVec: BlockVector): List<BlockVector> {
     // どの方向に進んでるかを取得する
     val direction = run {
         // 現在と手前の差分で、進んでる方向を26方向で表す
