@@ -1,5 +1,6 @@
 package org.adw39.mypaperplugin.utils
 
+import org.adw39.mypaperplugin.MyPaperPlugin
 import org.bukkit.Material
 import org.bukkit.block.Block
 import org.bukkit.util.BlockVector
